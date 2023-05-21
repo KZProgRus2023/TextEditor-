@@ -1,0 +1,51 @@
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace TextEditor.BL
+{
+    public class IFileManager
+    {
+        string GetContent(string filePath);
+        string GetContent(string filePath, Encoding encoding);
+        void SaveContent(string content, string filePath);
+        void SaveContent(string content, string filePath, Encoding encoding);
+        int GetSymbolCount(string content);
+        bool IsExist(string filePath);
+    }
+    public class FileManager:IFileManager
+    {
+        private readonly Encoding _defaultencoding=Encoding.GetEncoding(1251);
+
+        public bool IsExist(string path)
+        {
+            bool isExist=File.Exists(filePath);
+            return isExist;
+        }
+        public string GetCintent(string filePath)
+        {
+            return GetContent(filePath, _defaultEncoding);
+        }
+        public string GetContent(string filePath, Encoding encoding)
+        {
+            string content = File.ReadAllText(filePath, encoding);
+            return content;
+        }
+        public void SaveContent(string content, string filePath)
+        {
+            SaveContent(content, filePath, _defaultencoding);
+        }
+        public void SaveContent(string content, string filePath, Encoding encoding)
+        {
+            File.WriteAllText(filePath, content, encoding);
+        }
+        public int GetSymbolCount(string content)
+        {
+        int count = content.Length;
+            return count;
+        }
+    }
+}
